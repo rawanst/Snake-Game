@@ -3,13 +3,8 @@ import {
   ThemeProvider, 
   CssBaseline, 
   Box,
-  Button,
-  IconButton,
-  Typography,
 } from '@mui/material'
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import PauseCircleIcon from '@mui/icons-material/PauseCircle'
-import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled'
+import HeaderGame from './Component/HeaderGame'
 
 const darkTheme = createTheme({
   palette: {
@@ -34,28 +29,8 @@ export default function App() {
           width='95%'
           maxWidth={400}
         >
+          <HeaderGame />
           
-          {/* Score Play Pause Restart  */}
-          <Box
-            display='flex'
-            justifyContent='flex-end'
-            alignItems='center'
-            maxHeight='40px'
-          >
-            <Typography width='100%'>
-              Score: 100000
-            </Typography>
-            <IconButton>
-              <PlayCircleIcon />
-            </IconButton>
-            <IconButton>
-              <PauseCircleIcon />
-            </IconButton>
-            <IconButton>
-              <ReplayCircleFilledIcon />
-            </IconButton>
-          </Box>
-
           {/* Snake Playground */}
           <Box
             height={400}
