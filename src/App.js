@@ -5,6 +5,7 @@ import {
   Box,
 } from '@mui/material'
 import HeaderGame from './Component/HeaderGame'
+import Playground from './Component/Playground'
 
 const darkTheme = createTheme({
   palette: {
@@ -30,18 +31,7 @@ export default function App() {
           maxWidth={400}
         >
           <HeaderGame />
-          
-          {/* Snake Playground */}
-          <Box
-            height={400}
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            bgcolor='#111'
-            borderRadius={1}
-          >
-            <h1>Snake Game</h1>
-          </Box>
+          <Playground />
         </Box>
       </Box>
     </ThemeProvider>
