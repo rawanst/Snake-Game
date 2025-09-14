@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { 
+  createTheme, 
+  ThemeProvider, 
+  CssBaseline, 
+  Box, 
+} from '@mui/material'
 
-function App() {
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#000000',
+    },
+  },
+})
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        minHeight='100vh'
+      >
+        <Box
+          width='95%'
+          maxWidth={400}
+          height={400}
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          bgcolor='#111'
+          borderRadius={1}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <h1>Snake Game</h1>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  )
 }
-
-export default App;
