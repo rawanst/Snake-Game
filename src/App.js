@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { 
   createTheme, 
   ThemeProvider, 
@@ -16,7 +17,11 @@ const darkTheme = createTheme({
   },
 })
 
-export default function App() {
+const App = () => {
+
+  const [ rows , setRows ] = useState(20)
+  const [ cols , setCols ] = useState(20)
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -30,10 +35,17 @@ export default function App() {
           width='95%'
           maxWidth={400}
         >
+
           <HeaderGame />
-          <Playground />
+          <Playground 
+            rows={rows} 
+            cols={cols}
+          />
+
         </Box>
       </Box>
     </ThemeProvider>
   )
 }
+
+export default App
