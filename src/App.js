@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import { 
+  useState, 
+  useEffect, 
+} from 'react'
 import { 
   createTheme, 
   ThemeProvider, 
@@ -27,6 +30,19 @@ const App = () => {
 
   const [ rows , setRows ] = useState(20)
   const [ cols , setCols ] = useState(20)
+
+  const [ speed, setSpeed ] = useState(400)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const copySnake = snake.map(segment => [...segment])
+      copySnake.forEach(x => {
+        x[0] === rows ? x[0] = 0 : x[0] ++
+      })
+      setSnake(copySnake)
+    }, speed)
+    return () => clearInterval(interval)
+  }, [snake, rows, speed])
 
   return (
     <ThemeProvider theme={darkTheme}>
