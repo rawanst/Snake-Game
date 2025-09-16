@@ -32,17 +32,62 @@ const App = () => {
   const [ cols , setCols ] = useState(20)
 
   const [ speed, setSpeed ] = useState(400)
+  const [direction, setDirection] = useState('R')
+  // Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const copySnake = snake.map(segment => [...segment])
-      copySnake.forEach(x => {
-        x[0] === rows ? x[0] = 0 : x[0] ++
-      })
-      setSnake(copySnake)
+      moveSnake()
     }, speed)
     return () => clearInterval(interval)
   }, [snake, rows, speed])
+
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+    switch(e.key) {
+      case 'ArrowUp':
+        setDirection('U')
+        break
+      case 'ArrowDown':
+        setDirection('D')
+        break
+      case 'ArrowLeft':
+        setDirection('L')
+        break
+      case 'ArrowRight':
+        setDirection('R')
+        break
+      default:
+        break
+    }
+  }
+
+  window.addEventListener('keydown', handleKeyDown)
+  return () => window.removeEventListener('keydown', handleKeyDown)
+}, []);
+
+  const moveSnake = () => {
+    const copySnake = snake.map(segment => [...segment]) // deeper copy than [...segment]
+    copySnake.forEach(x => {
+      switch(direction){
+        case 'R':
+          x[0] === cols - 1 ? x[0] = 0 : x[0]++
+          break
+        case 'L':
+          x[0] === cols - 1 ? x[0] = 0 : x[0]--
+          break
+        case 'U':
+          x[1] === 0 ? x[1] = rows - 1 : x[1]--
+          break
+        case 'D':
+          x[1] === rows - 1 ? x[1] = 0 : x[1]++
+          break
+        default:
+          break
+      }
+    })
+    setSnake(copySnake)
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
