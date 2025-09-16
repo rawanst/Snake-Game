@@ -19,6 +19,12 @@ const darkTheme = createTheme({
 
 const App = () => {
 
+   const [ snake, setSnake ] = useState([
+    [10, 10],
+    [9, 10],
+    [8, 10],
+  ])
+
   const [ rows , setRows ] = useState(20)
   const [ cols , setCols ] = useState(20)
 
@@ -38,6 +44,7 @@ const App = () => {
 
           <HeaderGame />
           <Playground 
+            snake={snake} 
             rows={rows} 
             cols={cols}
           />
