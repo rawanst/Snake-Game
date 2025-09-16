@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { 
+  createTheme, 
+  ThemeProvider, 
+  CssBaseline, 
+  Box,
+} from '@mui/material'
+import HeaderGame from './Component/HeaderGame'
+import Playground from './Component/Playground'
 
-function App() {
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#000000',
+    },
+  },
+})
+
+const App = () => {
+
+   const [ snake, setSnake ] = useState([
+    [10, 10],
+    [9, 10],
+    [8, 10],
+  ])
+
+  const [ rows , setRows ] = useState(20)
+  const [ cols , setCols ] = useState(20)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        minHeight='100vh'
+      >
+        <Box
+          width='95%'
+          maxWidth={400}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+          <HeaderGame />
+          <Playground 
+            snake={snake} 
+            rows={rows} 
+            cols={cols}
+          />
+
+        </Box>
+      </Box>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
