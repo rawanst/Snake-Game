@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import HeaderGame from './Component/HeaderGame'
 import Playground from './Component/Playground'
+import MobileController from './Component/MobileController'
 
 const darkTheme = createTheme({
   palette: {
@@ -168,7 +169,8 @@ const App = () => {
             rows={rows}
             cols={cols}
           />
-
+          <MobileController />
+          
         </Box>
       </Box>
     </ThemeProvider>
