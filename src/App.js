@@ -41,6 +41,8 @@ const App = () => {
   const [direction, setDirection] = useState('R')
   // Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
 
+  const [ score, setScore ] = useState(0)
+
   useEffect(() => {
     const interval = setInterval(() => moveSnake(), speed)
     return () => clearInterval(interval)
@@ -93,6 +95,7 @@ const App = () => {
 
     if ( head[0] === food [0] && head[1] === food[1] ){
       setFood(newFood())
+      setScore(score+1)
     } else {
       newSnake.pop()
     }
@@ -130,7 +133,7 @@ const App = () => {
           maxWidth={400}
         >
 
-          <HeaderGame />
+          <HeaderGame score={score}/>
           <Playground
             snake={snake}
             food={food}

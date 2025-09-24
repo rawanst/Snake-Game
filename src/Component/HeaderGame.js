@@ -7,7 +7,9 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled'
 
-const HeaderGame = () => {
+const HeaderGame = ({ score }) => {
+
+  
   return(
     <Box
       display='flex'
@@ -17,7 +19,7 @@ const HeaderGame = () => {
     >
 
       <Typography width='100%'>
-        Score: 100000
+        Score: {score}
       </Typography>
 
       <IconButton>
