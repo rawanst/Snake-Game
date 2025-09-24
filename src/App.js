@@ -27,9 +27,15 @@ const App = () => {
     [9, 10],
     [8, 10],
   ])
-
+  
   const [ rows , setRows ] = useState(20)
   const [ cols , setCols ] = useState(20)
+
+  const newFood = () => [
+    Math.floor(Math.random() * cols),
+    Math.floor(Math.random() * rows),
+  ]
+  const [ food , setFood ] = useState(newFood())
 
   const [ speed, setSpeed ] = useState(400)
   const [direction, setDirection] = useState('R')
@@ -122,6 +128,7 @@ const App = () => {
           <HeaderGame />
           <Playground
             snake={snake}
+            food={food}
             rows={rows}
             cols={cols}
           />

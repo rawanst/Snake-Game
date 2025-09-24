@@ -2,23 +2,25 @@ import {
   Box 
 } from '@mui/material'
 
-const Playground = ({ rows, cols, snake }) => {
+const Playground = ({ rows, food, cols, snake }) => {
 
   // Create Arrays that contains the render of every Box
   // Each Box contains it location, like this: 'x-y'
   // Each Box has a width and height to adapt the number of rows and cols
   // The Box color defer if there is the snake on it
   const cells = Array.from({ length: rows * cols }, (_, i) => {
-    const x = i % cols;
-    const y = Math.floor(i / cols);
-    const isSnake = snake.some(([sx, sy]) => sx === x && sy === y);
+    const x = i % cols
+    const y = Math.floor(i / cols)
+    const isSnake = snake.some(([sx, sy]) => sx === x && sy === y)
+    const isFood = ( x === food[0] && y === food[1] ) ? true : false
+    
     return (
       <Box
         key={`${x}-${y}`}
         sx={{
           width: `${100 / cols}%`,
           height: `${100 / rows}%`,
-          bgcolor: isSnake ? '#39ff14' : 'transparent',
+          bgcolor: isSnake ? '#39ff14' : ( isFood ? 'red' : 'transparent'),
           border: '1px solid #222',
         }}
       />
