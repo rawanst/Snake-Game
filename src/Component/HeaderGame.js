@@ -3,13 +3,12 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled'
 
-const HeaderGame = ({ score }) => {
+const HeaderGame = ({ score, isPause, setIsPause, setIsRestart }) => {
 
-  
   return(
     <Box
       display='flex'
@@ -22,15 +21,17 @@ const HeaderGame = ({ score }) => {
         Score: {score}
       </Typography>
 
-      <IconButton>
-        <PlayCircleIcon />
-      </IconButton>
+      { isPause ? (
+        <IconButton onClick={() => setIsPause(false)}>
+          <PlayCircleIcon />
+        </IconButton>
+      ) : (
+        <IconButton onClick={() => setIsPause(true)}>
+          <PauseCircleIcon />
+        </IconButton>
+      )}
 
-      <IconButton>
-        <PauseCircleIcon />
-      </IconButton>
-
-      <IconButton>
+      <IconButton onClick={() => setIsRestart(true)}>
         <ReplayCircleFilledIcon />
       </IconButton>
       

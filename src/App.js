@@ -20,16 +20,24 @@ const darkTheme = createTheme({
   },
 })
 
+const initialSnake = [
+  [10, 10],
+  [9, 10],
+  [8, 10],
+]
+const initialRows = 20
+const initialCols = 20
+const initialSpeed = 400
+const initialDirection = 'R'
+// Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
+const initialScore = 0
+
 const App = () => {
 
-   const [ snake, setSnake ] = useState([
-    [10, 10],
-    [9, 10],
-    [8, 10],
-  ])
+  const [ snake, setSnake ] = useState(initialSnake)
 
-  const [ rows , setRows ] = useState(20)
-  const [ cols , setCols ] = useState(20)
+  const [ rows , setRows ] = useState(initialRows)
+  const [ cols , setCols ] = useState(initialCols)
 
   const newFood = () => [
     Math.floor(Math.random() * cols),
@@ -37,16 +45,19 @@ const App = () => {
   ]
   const [ food , setFood ] = useState(newFood())
 
-  const [ speed, setSpeed ] = useState(400)
-  const [direction, setDirection] = useState('R')
-  // Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
+  const [ speed, setSpeed ] = useState(initialSpeed)
+  const [direction, setDirection] = useState(initialDirection)
 
-  const [ score, setScore ] = useState(0)
+  const [ score, setScore ] = useState(initialScore)
+
+  const [ isPause, setIsPause ] = useState(true)
+  const [ isRestart, setIsRestart ] = useState(false)
 
   useEffect(() => {
-    const interval = setInterval(() => moveSnake(), speed)
+    const interval = isPause ? null : setInterval(() => moveSnake(), speed)
+    if(isRestart){ restart() }
     return () => clearInterval(interval)
-  }, [snake, direction, speed, food])
+  }, [snake, direction, speed, food, isPause])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -71,6 +82,18 @@ const App = () => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
+
+  const restart = () => {
+    setSnake(initialSnake)
+    setRows(initialRows)
+    setCols(initialCols)
+    setFood(newFood())
+    setSpeed(initialSpeed)
+    setDirection(initialDirection)
+    setScore(initialScore)
+    setIsPause(false)
+    setIsRestart(false)
+  }
 
   const moveSnake = () => {
     const head = snake[0]
@@ -133,7 +156,12 @@ const App = () => {
           maxWidth={400}
         >
 
-          <HeaderGame score={score}/>
+          <HeaderGame 
+            score={score}
+            isPause={isPause}
+            setIsPause={setIsPause}
+            setIsRestart={setIsRestart}
+          />
           <Playground
             snake={snake}
             food={food}
