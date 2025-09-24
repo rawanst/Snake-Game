@@ -27,7 +27,7 @@ const App = () => {
     [9, 10],
     [8, 10],
   ])
-  
+
   const [ rows , setRows ] = useState(20)
   const [ cols , setCols ] = useState(20)
 
@@ -44,7 +44,7 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => moveSnake(), speed)
     return () => clearInterval(interval)
-  }, [snake, direction, speed])
+  }, [snake, direction, speed, food])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -90,7 +90,12 @@ const App = () => {
     }
 
     const newSnake = [newHead, ...snake]
-    newSnake.pop()
+
+    if ( head[0] === food [0] && head[1] === food[1] ){
+      setFood(newFood())
+    } else {
+      newSnake.pop()
+    }
     setSnake(newSnake)
   }
 
