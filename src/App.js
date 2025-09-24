@@ -31,6 +31,12 @@ const App = () => {
   const [ rows , setRows ] = useState(20)
   const [ cols , setCols ] = useState(20)
 
+  const newFood = () => [
+    Math.floor(Math.random() * cols),
+    Math.floor(Math.random() * rows),
+  ]
+  const [ food , setFood ] = useState(newFood())
+
   const [ speed, setSpeed ] = useState(400)
   const [direction, setDirection] = useState('R')
   // Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
@@ -38,7 +44,7 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => moveSnake(), speed)
     return () => clearInterval(interval)
-  }, [snake, direction, speed])
+  }, [snake, direction, speed, food])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -84,7 +90,12 @@ const App = () => {
     }
 
     const newSnake = [newHead, ...snake]
-    newSnake.pop()
+
+    if ( head[0] === food [0] && head[1] === food[1] ){
+      setFood(newFood())
+    } else {
+      newSnake.pop()
+    }
     setSnake(newSnake)
   }
 
@@ -122,6 +133,7 @@ const App = () => {
           <HeaderGame />
           <Playground
             snake={snake}
+            food={food}
             rows={rows}
             cols={cols}
           />
