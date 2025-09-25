@@ -7,7 +7,11 @@ import {
   ThemeProvider,
   CssBaseline,
   Box,
+  Tooltip,
+  IconButton,
 } from '@mui/material'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import YardOutlinedIcon from '@mui/icons-material/YardOutlined'
 import HeaderGame from './Component/HeaderGame'
 import Playground from './Component/Playground'
 import MobileController from './Component/MobileController'
@@ -21,44 +25,47 @@ const darkTheme = createTheme({
   },
 })
 
-const initialSnake = [
-  [10, 10],
-  [9, 10],
-  [8, 10],
-]
-const initialRows = 20
-const initialCols = 20
-const initialSpeed = 400
-const initialDirection = 'R'
-// Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
-const initialScore = 0
+const initialValue = {
+  snake: [
+    [10, 10],
+    [9, 10],
+    [8, 10],
+  ],
+  rows: 20,
+  cols: 20,
+  speed: 500,
+  score: 0,
+  direction: 'R' // Values: R(for Right) or L(for Left) or U(for Up) or D(for Down)
+}
+
 
 const App = () => {
 
-  const [ snake, setSnake ] = useState(initialSnake)
-
-  const [ rows , setRows ] = useState(initialRows)
-  const [ cols , setCols ] = useState(initialCols)
+  // -------- state section --------
+  const [ snake, setSnake ] = useState(initialValue.snake)
+  const [ rows , setRows ] = useState(initialValue.rows)
+  const [ cols , setCols ] = useState(initialValue.cols)
 
   const newFood = () => [
     Math.floor(Math.random() * cols),
     Math.floor(Math.random() * rows),
   ]
+
   const [ food , setFood ] = useState(newFood())
-
-  const [ speed, setSpeed ] = useState(initialSpeed)
-  const [direction, setDirection] = useState(initialDirection)
-
-  const [ score, setScore ] = useState(initialScore)
-
+  const [ speed, setSpeed ] = useState(initialValue.speed)
+  const [direction, setDirection] = useState(initialValue.direction)
+  const [ score, setScore ] = useState(initialValue.score)
   const [ isPause, setIsPause ] = useState(true)
   const [ isRestart, setIsRestart ] = useState(false)
+  const [ isGameOver, setIsGameOver ] = useState(false)
+  // -----------------------------------
 
+  // -------- useEffect section --------
   useEffect(() => {
     const interval = isPause ? null : setInterval(() => moveSnake(), speed)
     if(isRestart){ restart() }
     return () => clearInterval(interval)
-  }, [snake, direction, speed, food, isPause])
+  }, [snake, direction, speed, food, isPause, isRestart])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -83,17 +90,20 @@ const App = () => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
+  // -----------------------------------
 
+  // -------- functions section --------
   const restart = () => {
-    setSnake(initialSnake)
-    setRows(initialRows)
-    setCols(initialCols)
+    setSnake(initialValue.snake)
+    setRows(initialValue.rows)
+    setCols(initialValue.cols)
     setFood(newFood())
-    setSpeed(initialSpeed)
-    setDirection(initialDirection)
-    setScore(initialScore)
+    setSpeed(initialValue.speed)
+    setDirection(initialValue.direction)
+    setScore(initialValue.score)
     setIsPause(false)
     setIsRestart(false)
+    setIsGameOver(false)
   }
 
   const moveSnake = () => {
@@ -120,10 +130,18 @@ const App = () => {
     if ( head[0] === food [0] && head[1] === food[1] ){
       setFood(newFood())
       setScore(score+1)
+      setSpeed(speed+100)
     } else {
       newSnake.pop()
     }
     setSnake(newSnake)
+
+    snake.forEach( (i, index) => {
+      if( i[0] === newHead[0] && i[1] === newHead[1]){ 
+        setIsPause(true)
+        setIsGameOver(true)
+      }
+    })
   }
 
   const moveRight = (x) => {
@@ -142,10 +160,35 @@ const App = () => {
     x[1] === rows - 1 ? x[1] = 0 : x[1]++
     return x
   }
-  
+  // -----------------------------------
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+
+      <Box
+        display='flex'
+        justifyContent='flex-end'
+      >
+        <Tooltip title="Portfolio">
+          <IconButton 
+            edge='end'
+            target="_blank"
+            href='https://rawanst.vercel.app/'
+          >
+            <YardOutlinedIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="GitHub">
+          <IconButton
+            target="_blank"
+            href='https://github.com/rawanst/Snake-Game'
+          >
+            <GitHubIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+
       <Box
         display='flex'
         justifyContent='center'
@@ -156,12 +199,12 @@ const App = () => {
           width='95%'
           maxWidth={400}
         >
-
           <HeaderGame 
             score={score}
             isPause={isPause}
             setIsPause={setIsPause}
             setIsRestart={setIsRestart}
+            isGameOver={isGameOver}
           />
           <Playground
             snake={snake}
@@ -172,7 +215,6 @@ const App = () => {
           <MobileController 
             setDirection={setDirection}
           />
-          
         </Box>
       </Box>
     </ThemeProvider>

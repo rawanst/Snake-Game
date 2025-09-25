@@ -7,7 +7,13 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle'
 import PauseCircleIcon from '@mui/icons-material/PauseCircle'
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled'
 
-const HeaderGame = ({ score, isPause, setIsPause, setIsRestart }) => {
+const HeaderGame = ({ 
+  score, 
+  isPause, 
+  setIsPause, 
+  setIsRestart,
+  isGameOver
+}) => {
 
   return(
     <Box
@@ -21,14 +27,18 @@ const HeaderGame = ({ score, isPause, setIsPause, setIsRestart }) => {
         Score: {score}
       </Typography>
 
-      { isPause ? (
-        <IconButton onClick={() => setIsPause(false)}>
-          <PlayCircleIcon />
-        </IconButton>
+      { isGameOver ? (
+        <Typography variant='subtitle2'>GameOver</Typography>
       ) : (
-        <IconButton onClick={() => setIsPause(true)}>
-          <PauseCircleIcon />
-        </IconButton>
+        isPause ? (
+          <IconButton onClick={() => setIsPause(false)}>
+            <PlayCircleIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={() => setIsPause(true)}>
+            <PauseCircleIcon />
+          </IconButton>
+        )
       )}
 
       <IconButton onClick={() => setIsRestart(true)}>
