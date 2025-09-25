@@ -7,7 +7,11 @@ import {
   ThemeProvider,
   CssBaseline,
   Box,
+  Tooltip,
+  IconButton,
 } from '@mui/material'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import YardOutlinedIcon from '@mui/icons-material/YardOutlined'
 import HeaderGame from './Component/HeaderGame'
 import Playground from './Component/Playground'
 import MobileController from './Component/MobileController'
@@ -161,6 +165,30 @@ const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+
+      <Box
+        display='flex'
+        justifyContent='flex-end'
+      >
+        <Tooltip title="Portfolio">
+          <IconButton 
+            edge='end'
+            target="_blank"
+            href='https://rawanst.vercel.app/'
+          >
+            <YardOutlinedIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="GitHub">
+          <IconButton
+            target="_blank"
+            href='https://github.com/rawanst/Snake-Game'
+          >
+            <GitHubIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+
       <Box
         display='flex'
         justifyContent='center'
