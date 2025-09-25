@@ -7,7 +7,7 @@ import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp'
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown'
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight'
 
-const MobileController = () => {
+const MobileController = ({ setDirection }) => {
   return(
     <Box
       sx={{
@@ -17,7 +17,7 @@ const MobileController = () => {
 
       }}
     >
-      <IconButton>
+      <IconButton onClick={() => setDirection('L')}>
         <ArrowCircleLeftIcon  sx={{fontSize: '6vh'}}/>
       </IconButton>
 
@@ -28,16 +28,16 @@ const MobileController = () => {
           alignContent: 'space-around',
         }}
       >
-        <IconButton sx={{mb: '3vh'}}>
+        <IconButton sx={{mb: '3vh'}} onClick={() => setDirection('U')}>
           <ArrowCircleUpIcon sx={{fontSize: '6vh'}} />
         </IconButton>
-        <IconButton sx={{mt: '3vh'}}>
+        <IconButton sx={{mt: '3vh'}} onClick={() => setDirection('D')}>
           <ArrowCircleDownIcon sx={{fontSize: '6vh'}} />
         </IconButton>
       </Box>
 
       <IconButton>
-        <ArrowCircleRightIcon sx={{fontSize: '6vh'}} />
+        <ArrowCircleRightIcon sx={{fontSize: '6vh'}} onClick={() => setDirection('R')}/>
       </IconButton>
     </Box>
   )

@@ -169,7 +169,9 @@ const App = () => {
             rows={rows}
             cols={cols}
           />
-          <MobileController />
+          <MobileController 
+            setDirection={setDirection}
+          />
           
         </Box>
       </Box>
